@@ -1,26 +1,31 @@
+<!-- eslint-disable vue/require-component-is -->
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <component :is="layout">
+    <router-view />
+  </component>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import axios from "axios";
+import { onMounted, computed } from "vue";
+import { PUBLIC_LAYOUT } from "@/constants";
+import { useRoute } from "vue-router";
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  setup() {
+    const route = useRoute();
+    onMounted(async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/transactions"
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    });
+    return {
+      layout: computed(() => route.meta?.layout || PUBLIC_LAYOUT + "-layout"),
+    };
+  },
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
