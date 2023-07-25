@@ -13,6 +13,7 @@ import { useRoute } from "vue-router";
 export default {
   setup() {
     const route = useRoute();
+    // console.log(route);
     onMounted(async () => {
       try {
         const response = await axios.get(

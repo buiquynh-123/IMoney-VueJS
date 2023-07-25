@@ -5,9 +5,14 @@
 </template>
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { useCounterStore } from "../budget/budget.vue";
 export default {
   components: {
     FontAwesomeIcon,
+  },
+  setup() {
+    const store = useCounterStore();
+    console.log(store);
   },
 };
 </script>

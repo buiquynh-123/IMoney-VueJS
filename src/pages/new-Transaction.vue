@@ -185,7 +185,7 @@ export default {
     const store = useStore();
     const isMoreDetails = ref(false);
     const user = computed(() => store.state.user);
-    const { error, addRecord } = useCollection();
+    const { addRecord } = useCollection();
 
     const total = ref(0);
     const category = ref("");
@@ -215,15 +215,8 @@ export default {
         time: time.value,
         userId: user.value._id,
       };
-      const formData = new FormData();
-      Object.keys(transaction).forEach((key) =>
-        formData.append(key, transaction[key])
-      );
 
-      formData.append("image", file.value);
-      await addRecord(formData);
-      console.log("error: ", error);
-      console.log("create: ");
+      await addRecord(transaction);
     }
     return {
       onSubmit,
